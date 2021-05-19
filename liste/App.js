@@ -7,11 +7,11 @@ class App extends React.Component {
   
 
   render() {
-    console.log("App test countries", this.props.country);
-    console.log("App test countries", this.props.country);
+    
 
     return (
       <>
+
       <List/>
       </>
     );

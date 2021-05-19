@@ -1,41 +1,64 @@
 import React, { Component } from "react";
-import { SafeAreaView, FlatList, View, Text, Image } from "react-native";
+import {
+  StyleSheet,
+  SafeAreaView,
+  FlatList,
+  View,
+  Text,
+  Image,
+} from "react-native";
 
 export default class List extends Component {
   state = {
     country: [],
-    flag: "",
   };
 
   componentDidMount() {
     fetch("http://restcountries.eu/rest/v2/all")
       .then((response) => response.json())
       .then((data) => {
-        console.log("data Country in componentDidMount", data);
         const flagMap = data.map((elem) => {
-          return  <img src={elem.flag} />
+          return (
+            <>
+              <Image source={{ uri: elem.flag }} style={styles.images} />
+              <Text style={styles.title}>
+                Country : {elem.name}
+                <br /> <br />
+                Capital : {elem.capital}
+              </Text>
+            </>
+          );
         });
-        const ctyMap = data.map((elem) => {
-          return <Text>{elem.country} </Text>
-        });
-        console.log("test");
-        console.log("Home data country in componentDidMount", testMap);
 
         this.setState({
-          country: ctyMap,
-          flag: flagMap,
+          country: flagMap,
         });
       });
   }
+  
 
   render() {
-    //   console.log("List test state",this.state.country);
     return (
-      <View>
-        
-       
-        
-      </View>
+      <>
+       {this.state.country}
+      </>
     );
   }
 }
+const styles = StyleSheet.create({
+  title: {
+    display: "block",
+    fontWeight: "bold",
+    fontSize: 20,
+    margin: 20,
+    textAlign: "center",
+  },
+  images: {
+    display: "block",
+    width: "300px",
+    height: "200px",
+    margin: "auto",
+    resizeMode: "center",
+    marginTop: 50,
+  },
+});
